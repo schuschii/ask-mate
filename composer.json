@@ -1,0 +1,14 @@
+{
+  "name": "askfm/askMate",
+  "description": "AskMate MVC teamwork",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "require": {
+    "psr/log": "^3.0",
+    "eftec/bladeone": "^4.17"
+  }
+}
