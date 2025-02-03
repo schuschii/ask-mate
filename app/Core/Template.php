@@ -11,7 +11,7 @@ class Template
     public static function getInstance(): BladeOne
     {
         if (self::$blade === null) {
-            $views = __DIR__ . '/../../views'; // Path to template files
+            $views = __DIR__ . '/../../src/views'; // Path to template files
             $cache = __DIR__ . '/../../cache'; // Path to compiled templates
 
             // Ensure cache directory exists
