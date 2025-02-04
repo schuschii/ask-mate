@@ -39,6 +39,11 @@ echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
 
 
 use App\Controllers\HomeController;
+use App\Controllers\QuestionController;
 
 $controller = new HomeController();
 $controller->index();
+
+$controllerQuestion = new QuestionController($pdo);
+$controllerQuestion->showQuestions();
+

@@ -15,11 +15,11 @@ class Template
             $cache = __DIR__ . '/../../cache'; // Path to compiled templates
 
             // Ensure cache directory exists
-            if (!file_exists($cache)) {
-                mkdir($cache, 0777, true);
+           if (!file_exists($cache)) {
+               mkdir($cache, 0777, true);
             }
 
-            self::$blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
+            self::$blade = new BladeOne($views,$cache, BladeOne::MODE_AUTO);
         }
 
         return self::$blade;
