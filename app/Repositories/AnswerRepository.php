@@ -23,7 +23,7 @@ use PDO;
     {
         $sql = "SELECT * FROM answer"; //queryvel kiszedek minden kérdést a táblából
         $stmt = $this->db->query($sql);//egy pdo class method arra hogy elvégezze a queryt
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); //lefetchel mindent mint egy associative array
+        return $stmt->fetchAll(PDO::FETCH_OBJ); //lefetchel mindent mint egy associative array
     }
 
     /**
@@ -34,7 +34,7 @@ use PDO;
         $sql = "SELECT * FROM answer WHERE id = :id";
         $stmt = $this->db->prepare($sql); //előkészíti a queryt mielőtt végrehajtaná, data ként fogja kezelni az id-t így nem tudják droppolni vagy lekérni az egészet
         $stmt->execute(['id' => $id]); // helyettesíti a placeholdert a valós id value val majd végre hajtja a queryt
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result ? (object)$result : null;
     }
 

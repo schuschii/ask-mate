@@ -42,6 +42,7 @@ echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
 use App\Core\Router;
 use App\Controllers\UserController;
 use App\Controllers\HomeController;
+use App\Controllers\AnswerController;
 
 $router = new Router();
 
@@ -53,3 +54,8 @@ $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
 $router->dispatch();
 
 // Run with "php -S localhost:8000 -t public"
+$controller = new HomeController();
+$controller1 = new AnswerController();
+$controller->index();
+
+$controller1->updateAnswer();

@@ -19,17 +19,14 @@ class AnswerController extends Controller
     public function listAnswers(): void
     {
         $answers = $this->answerRepository->findAll();
-        $this->render('answers.list', ['answers' => $answers]);
+        $this->render('answer.list', ['answers' => $answers]);
     }
 
 
     public function create(): void
     {
-        if (!isset($_GET['question_id'])) {
-            die("Missing question ID.");
-        }
 
-        $this->render('answers.create', ['question_id' => $_GET['question_id']]);
+        $this->render('answer.create', ['question_id' => $_GET['question_id']]);
     }
 
 
@@ -76,7 +73,7 @@ class AnswerController extends Controller
         }
 
         // Render edit page with answer data
-        $this->render('answers.edit', ['answer' => $answer]);
+        $this->render('answer.edit', ['answer' => $answer]);
     }
 
     public function updateAnswer(): void
@@ -133,7 +130,7 @@ class AnswerController extends Controller
                 die("Unauthorized action.");
             }
 
-            $this->render('answers.delete', ['answer' => $answer]);
+            $this->render('answer.delete', ['answer' => $answer]);
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Step 2: Handle the actual deletion
             if (!isset($_POST['id'], $_POST['question_id'])) {
