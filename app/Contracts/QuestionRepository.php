@@ -29,7 +29,12 @@ class QuestionRepository implements RepositoryInterface
      */
     public function find(int $id): ?object
     {
-        return null;
+        $sql = "SELECT * FROM question WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result !== false ? $result : null;
     }
 
     /**
@@ -37,7 +42,16 @@ class QuestionRepository implements RepositoryInterface
      */
     public function save(object $entity): void
     {
-        // TODO: Implement save() method.
+        $sql = "INSERT INTO question (title, message, vote_number) VALUES (:title, :message, 0)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':title', $entity->title);
+        $stmt->bindParam(':message', $entity->message);
+        $stmt->execute();
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->connection->lastInsertId();
     }
 
     /**
@@ -55,4 +69,6 @@ class QuestionRepository implements RepositoryInterface
     {
         // TODO: Implement delete() method.
     }
+
+
 }

@@ -17,7 +17,8 @@ namespace App\Controllers {
 
         private $repository;
 
-        public function __construct(PDO $connection){
+        public function __construct(PDO $connection)
+        {
             parent::__construct();
             $this->repository = new QuestionRepository($connection);
         }
@@ -31,5 +32,46 @@ namespace App\Controllers {
             ]);
         }
 
+        public function showAddQuestion(): void
+        {
+            $this->render('add-question', [
+                'title' => 'Add a new question'
+            ]);
+        }
+
+
+        // should superglobalmanager be used here???
+        public function addQuestion(): void
+        {
+            $title = $_POST['title'] ?? '';
+            $message = $_POST['message'] ?? '';
+
+            if ($title && $message) {
+                $question = (object) [
+                    'title' => $title,
+                    'message' => $message
+                ];
+                $this->repository->save($question);
+
+                $newQuestionId = $this->repository->getLastInsertId();
+                header("Location: /question/{$newQuestionId}");
+                exit;
+            }
+            $this->render('add_question', [
+                'title' => 'Add a new question',
+                'error' => 'Please fill in all fields'
+            ]);
+        }
+
+        public function showQuestion($id): void
+        {
+            $question = $this->repository->find($id);
+            $this->render('question', [
+                'title' => 'View Question',
+                'question' => $question
+            ]);
+        }
     }
+
+
 }

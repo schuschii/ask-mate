@@ -46,4 +46,6 @@ $controller->index();
 
 $controllerQuestion = new QuestionController($pdo);
 $controllerQuestion->showQuestions();
+$controllerQuestion->showQuestion(2);
+$controllerQuestion->addQuestion();
 
