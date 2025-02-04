@@ -43,6 +43,7 @@ use App\Controllers\AnswerController;
 
 $controller = new HomeController();
 $controller1 = new AnswerController();
+
 $controller->index();
 
 $controller1->updateAnswer();
