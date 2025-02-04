@@ -42,6 +42,7 @@ echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
 use App\Core\Router;
 use App\Controllers\UserController;
 use App\Controllers\HomeController;
+use App\Controllers\QuestionController;
 use App\Controllers\AnswerController;
 
 $router = new Router();
@@ -58,5 +59,14 @@ $controller = new HomeController();
 $controller1 = new AnswerController();
 
 $controller->index();
+
+$controllerQuestion = new QuestionController($pdo);
+$controllerQuestion->showQuestions();
+$controllerQuestion->showQuestion(2);
+$controllerQuestion->addQuestion();
+
+//delete should be called via router
+//update should be called via router
+
 
 $controller1->updateAnswer();
