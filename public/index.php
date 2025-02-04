@@ -56,6 +56,7 @@ $router->dispatch();
 // Run with "php -S localhost:8000 -t public"
 $controller = new HomeController();
 $controller1 = new AnswerController();
+
 $controller->index();
 
 $controller1->updateAnswer();
