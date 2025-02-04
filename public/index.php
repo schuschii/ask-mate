@@ -1,6 +1,7 @@
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+
 
 use App\Test;
 
@@ -13,7 +14,7 @@ $test->sayHello();
 use App\Core\Config;
 use App\Core\Database;
 
-Config::load(__DIR__ . '/config/config.local.json');
+Config::load(__DIR__ . '/../config/config.local.json');
 
 Database::connect();
 
@@ -38,10 +39,25 @@ $logger->error("Something went wrong!", ["file" => "index.php", "line" => 23]);
 echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
 
 
+use App\Core\Router;
+use App\Controllers\UserController;
 use App\Controllers\HomeController;
 use App\Controllers\QuestionController;
+use App\Controllers\AnswerController;
 
+$router = new Router();
+
+// Define routes
+$router->add('GET', '/', [HomeController::class, 'index']);
+$router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
+
+// Dispatch the request
+$router->dispatch();
+
+// Run with "php -S localhost:8000 -t public"
 $controller = new HomeController();
+$controller1 = new AnswerController();
+
 $controller->index();
 
 $controllerQuestion = new QuestionController($pdo);
@@ -52,3 +68,5 @@ $controllerQuestion->addQuestion();
 //delete should be called via router
 //update should be called via router
 
+
+$controller1->updateAnswer();
