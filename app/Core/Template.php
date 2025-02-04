@@ -11,6 +11,7 @@ class Template
     public static function getInstance(): BladeOne
     {
         if (self::$blade === null) {
+
             $views = __DIR__ . '/../../src/views'; // Path to template files
             $cache = __DIR__ . '/../../cache'; // Path to compiled templates
 
@@ -19,7 +20,14 @@ class Template
                 mkdir($cache, 0777, true);
             }
 
-            self::$blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
+            // Add multiple view directories to BladeOne
+            $viewPaths = [
+                $views . '/answer',   // Path to /views/answer
+                $views . '/question', // Path to /views/question
+                $views                // You can also include the root /views
+            ];
+
+            self::$blade = new BladeOne($viewPaths, $cache, BladeOne::MODE_AUTO);
         }
 
         return self::$blade;
