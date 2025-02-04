@@ -1,5 +1,5 @@
 {
-  "name": "askfm/askMate",
+  "name": "askfm/askmate",
   "description": "AskMate MVC teamwork",
   "type": "project",
   "autoload": {
@@ -9,6 +9,7 @@
   },
   "require": {
     "psr/log": "^3.0",
-    "eftec/bladeone": "^4.17"
+    "eftec/bladeone": "^4.17",
+    "ext-pdo": "*"
   }
 }

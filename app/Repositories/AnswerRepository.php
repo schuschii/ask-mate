@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Repositories;
+
+use AllowDynamicProperties;
+use App\Contracts\RepositoryInterface;
+use App\Core\Database;
+use PDO;
+
+#[AllowDynamicProperties] class AnswerRepository implements RepositoryInterface
+{
+    private PDO $pdo;
+
+    public function __construct()
+    {
+        $this->db = Database::getConnection();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
+    {
+        $sql = "SELECT * FROM answer"; //queryvel kiszedek minden kérdést a táblából
+        $stmt = $this->db->query($sql);//egy pdo class method arra hogy elvégezze a queryt
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); //lefetchel mindent mint egy associative array
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function find(int $id): ?object
+    {
+        $sql = "SELECT * FROM answer WHERE id = :id";
+        $stmt = $this->db->prepare($sql); //előkészíti a queryt mielőtt végrehajtaná, data ként fogja kezelni az id-t így nem tudják droppolni vagy lekérni az egészet
+        $stmt->execute(['id' => $id]); // helyettesíti a placeholdert a valós id value val majd végre hajtja a queryt
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (object)$result : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save(object $entity): void
+    {
+        $sql = "INSERT INTO answer (id_question, id_registered_user, message, vote_number) VALUES (:id_question, :id_registered_user, :message, :vote_number)";
+        $stmt = $this->db->prepare($sql); // ugyanúgy sql injection ellen véd
+        $stmt->execute(['id_question' => $entity->id_question,
+            'id_registered_user' => $entity->id_registered_user,
+            'message' => $entity->message,
+            'vote_number' => $entity->vote_number]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(object $entity): void
+    {
+        $sql = "UPDATE answer SET message = :message WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            'id' => $entity->getId(),
+            'message' => $entity->getMessage()
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(int $id): void
+    {
+        $sql = "DELETE FROM answer WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['id' => $id]);
+    }
+}
