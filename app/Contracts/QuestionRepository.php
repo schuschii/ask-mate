@@ -59,7 +59,12 @@ class QuestionRepository implements RepositoryInterface
      */
     public function update(object $entity): void
     {
-        // TODO: Implement update() method.
+        $sql = "UPDATE question SET title = :title, message = :message WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':title', $entity->title, PDO::PARAM_STR);
+        $stmt->bindParam(':message', $entity->message, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $entity->id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     /**
@@ -67,7 +72,10 @@ class QuestionRepository implements RepositoryInterface
      */
     public function delete(int $id): void
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM question WHERE id = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT); //casting id to int from url
+        $stmt->execute();
     }
 
 

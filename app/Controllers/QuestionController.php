@@ -47,7 +47,7 @@ namespace App\Controllers {
             $message = $_POST['message'] ?? '';
 
             if ($title && $message) {
-                $question = (object) [
+                $question = (object)[
                     'title' => $title,
                     'message' => $message
                 ];
@@ -63,13 +63,57 @@ namespace App\Controllers {
             ]);
         }
 
-        public function showQuestion($id): void
+        public function showQuestion(int $id): void
         {
             $question = $this->repository->find($id);
             $this->render('question', [
                 'title' => 'View Question',
                 'question' => $question
             ]);
+        }
+
+        public function deleteQuestion(int $id): void
+        {
+            $this->repository->delete($id);
+            header("Location: /questions");
+            exit();
+        }
+
+        public function showEditQuestion(int $id): void
+        {
+            $question = $this->repository->find($id);
+            if (!$question) {
+                die("Question not found!");
+            }
+
+            $this->render('edit_question', ['title' => "Edit Question", 'question' => $question]);
+        }
+
+
+        public function updateQuestion(int $id): void
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $title = $_POST['title'] ?? null;
+                $message = $_POST['message'] ?? null;
+
+                if ($title && $message) {
+                    $question = $this->repository->find($id);
+                    if (!$question) {
+                        die("Question not found!");
+                    }
+
+                    $question->title = $title;
+                    $question->message = $message;
+
+                    $this->repository->update($question);
+
+                    header("Location: /question/view/$id");
+                    exit;
+                }
+            }
+
+            header("Location: /question/edit/$id");
+            exit;
         }
     }
 

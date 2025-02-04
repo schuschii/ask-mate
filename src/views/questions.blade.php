@@ -15,6 +15,13 @@
         <p>{{ $question->message }}</p>
         <p><strong>Votes:</strong> {{ $question->vote_number }}</p>
         <p><strong>Submitted on:</strong> {{ $question->submission_time }}</p>
+
+        <a href="/question/edit/{{ $question->id }}">Edit</a>
+
+        <form action="/question/delete/{{ $question->id }}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" >Delete</button>
+        </form>
         <hr>
     </div>
 @endforeach

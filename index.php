@@ -49,3 +49,6 @@ $controllerQuestion->showQuestions();
 $controllerQuestion->showQuestion(2);
 $controllerQuestion->addQuestion();
 
+//delete should be called via router
+//update should be called via router
+
