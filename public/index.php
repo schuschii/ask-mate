@@ -46,8 +46,12 @@ use App\Controllers\HomeController;
 $router = new Router();
 
 // Define routes
+
 $router->add('GET', '/', [HomeController::class, 'index']);
-$router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
+//$router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
+$router->add('GET', '/user/register', [UserController::class, 'createUser']);
+$router->add('GET', '/user/login', [UserController::class, 'login']);
+
 
 // Dispatch the request
 $router->dispatch();
