@@ -14,7 +14,7 @@ if (!isset($answer)) {
 <body>
 <h1>Edit Your Answer</h1>
 
-<form action="/answer/update" method="POST">
+<form action="/answer/update/id/{{$answer->id}}" method="POST">
     <!-- CSRF Token -->
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
 
@@ -30,6 +30,6 @@ if (!isset($answer)) {
 </form>
 
 <br>
-<a href="/question/view?id=<?= $answer->id_question ?>">Cancel</a>
+<a href="/answers/list/{{$answer->id_question}}">Cancel</a>
 </body>
 </html>

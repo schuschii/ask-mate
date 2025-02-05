@@ -6,15 +6,18 @@
     <title>Create Answer</title>
 </head>
 <body>
+
 <h1>Post a New Answer</h1>
 
-<form action="/answers/post" method="POST">
+<!-- Debugging: Display Question ID (Remove this after testing) -->
+<p>Debug: Question ID = {{ $question_id }}</p>
+
+<form action="/answers/post/{{ $question_id }}" method="POST">
     <!-- CSRF Protection -->
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
 
-    <!-- Auto-fill Question ID if available -->
-    <label for="question_id">Question ID:</label>
-    <input type="number" name="question_id" value="<?php echo $_GET['question_id'] ?? ''; ?>" required readonly>
+    <!-- Hidden Question ID -->
+    <input type="hidden" name="question_id" value="{{ $question_id }}">
 
     <br>
 
@@ -27,6 +30,9 @@
 </form>
 
 <br>
-<a href="/answers/list">Back to Answers List</a>
+
+<!-- Ensure the correct Question ID is used -->
+<a href="/questions">Back to Questions List</a>
+
 </body>
 </html>

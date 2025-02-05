@@ -45,17 +45,23 @@ use App\Controllers\HomeController;
 use App\Controllers\QuestionController;
 use App\Controllers\AnswerController;
 
-$router = new Router();
+$router = new Router($pdo);
 
 // Define routes
 $router->add('GET', '/', [HomeController::class, 'index']);
 $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
-
+$router->add('GET', '/questions', [QuestionController::class, 'showQuestions']);
+$router->add('GET', '/answers/list/{question_id}', [AnswerController::class, 'showAnswers']);
+$router->add('GET', '/create/{question_id}', [AnswerController::class, 'create']);
+$router->add('POST', '/answers/post/{question_id}', [AnswerController::class, 'store']);
+$router->add('POST', '/delete/answer_id/{id}', [AnswerController::class, 'deleteAnswer']);
+$router->add('GET', '/answer/edit/id/{id}', [AnswerController::class, 'editAnswer']);
+$router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'updateAnswer']);
 // Dispatch the request
 $router->dispatch();
 
 // Run with "php -S localhost:8000 -t public"
-$controller = new HomeController();
+/*$controller = new HomeController();
 $controller1 = new AnswerController();
 
 $controller->index();
@@ -69,4 +75,4 @@ $controllerQuestion->addQuestion();
 //update should be called via router
 
 
-$controller1->updateAnswer();
+$controller1->updateAnswer();*/
