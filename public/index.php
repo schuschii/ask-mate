@@ -48,7 +48,15 @@ use App\Controllers\AnswerController;
 $router = new Router($pdo);
 
 // Define routes
+
 $router->add('GET', '/', [HomeController::class, 'index']);
+$router->add('GET', '/home', [HomeController::class, 'index']);
+//bade template:
+$router->add('GET', '/user/register', [UserController::class, 'createUser']);
+//actually passing data here:
+$router->add('POST', '/user/register', [UserController::class, 'saveUser']);
+$router->add('GET', '/user/login', [UserController::class, 'login']);
+
 $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
 $router->add('GET', '/questions', [QuestionController::class, 'showQuestions']);
 $router->add('GET', '/answers/list/{question_id}', [AnswerController::class, 'showAnswers']);
@@ -57,6 +65,7 @@ $router->add('POST', '/answers/post/{question_id}', [AnswerController::class, 's
 $router->add('POST', '/delete/answer_id/{id}', [AnswerController::class, 'deleteAnswer']);
 $router->add('GET', '/answer/edit/id/{id}', [AnswerController::class, 'editAnswer']);
 $router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'updateAnswer']);
+
 // Dispatch the request
 $router->dispatch();
 
