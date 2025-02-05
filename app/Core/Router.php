@@ -5,7 +5,11 @@ namespace App\Core;
 class Router
 {
     private array $routes = [];
-
+    private object $pdo;
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
     /**
      * Add a route to the router.
      *
@@ -83,7 +87,7 @@ class Router
             call_user_func_array($handler, $params);
         } elseif (is_array($handler) && count($handler) === 2) {
             [$controllerName, $method] = $handler;
-            $controller = new $controllerName();
+            $controller = new $controllerName($this->pdo);
             call_user_func_array([$controller, $method], $params);
         } else {
             throw new \Exception("Invalid route handler.");

@@ -6,27 +6,26 @@ use DateTime;
 
 class Answer
 {
-    private int $id;
-    private int $id_question;
-    private int $id_registered_user;
-    private string $message;
-    private int $votes = 0;
-    private DateTime $submission_time;
 
-    public function __construct(int $id, int $id_question, int $id_registered_user, string $message, int $votes)
+    public int $id_question;
+    public int $id_registered_user;
+    public string $message;
+    public int $vote_number = 0;
+    public DateTime $submission_time;
+
+    public function __construct( int $id_question, int $id_registered_user, string $message, int $votes)
     {
-        $this->id = $id;
+
         $this->id_question = $id_question;
         $this->id_registered_user = $id_registered_user;
         $this->message = $message;
-        $this->votes = $votes;
+        $this->vote_number = $votes;
         $this->submission_time = new DateTime('now');
     }
-
-    public function getId(): int
+    public function setMessage($message): void
     {
-        return $this->id;
-    }
+        $this->message = htmlentities($message);
+}
 
     public function getIdQuestion(): int
     {
@@ -43,8 +42,8 @@ class Answer
         return $this->id_registered_user;
     }
 
-    public function getVotes(): int
+    public function getVotenumer(): int
     {
-        return $this->votes;
+        return $this->vote_number;
     }
 }

@@ -9,10 +9,11 @@ use PDO;
 
 #[AllowDynamicProperties] class AnswerRepository implements RepositoryInterface
 {
-    private PDO $pdo;
+
 
     public function __construct()
     {
+
         $this->db = Database::getConnection();
     }
 
@@ -37,6 +38,14 @@ use PDO;
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result ? (object)$result : null;
     }
+    public function findByQuestion(int $question_id): array
+    {
+        $sql = "SELECT * FROM answer WHERE id_question = :question_id ORDER BY submission_time ASC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['question_id' => $question_id]);
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
     /**
      * @inheritDoc
@@ -51,6 +60,7 @@ use PDO;
             'vote_number' => $entity->vote_number]);
     }
 
+
     /**
      * @inheritDoc
      */
@@ -59,8 +69,8 @@ use PDO;
         $sql = "UPDATE answer SET message = :message WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
-            'id' => $entity->getId(),
-            'message' => $entity->getMessage()
+            'id' => $entity->id,
+            'message' => $entity->message,
         ]);
     }
 
