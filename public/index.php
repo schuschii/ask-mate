@@ -49,9 +49,14 @@ $router = new Router();
 
 $router->add('GET', '/', [HomeController::class, 'index']);
 //$router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
-$router->add('GET', '/user/register', [UserController::class, 'createUser']);
-$router->add('GET', '/user/login', [UserController::class, 'login']);
 
+//bade template:
+$router->add('GET', '/user/register', [UserController::class, 'createUser']);
+//actually passing data here:
+$router->add('POST', '/user/register', [UserController::class, 'saveUser']);
+
+$router->add('GET', '/user/login', [UserController::class, 'login']);
+$router->add('GET', '/home', [HomeController::class, 'index']);
 
 // Dispatch the request
 $router->dispatch();

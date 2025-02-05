@@ -32,14 +32,32 @@ class UserController extends Controller
             die("Method Not Allowed");
         }
 
-        if (!isset($_POST['email'], $_POST['password'])) {
-            die("Invalid request. Missing fields.");
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $confirmPassword = trim($_POST['confirm-password'] ?? '');
+
+        // Basic validation
+        if (!$email || !$password || !$confirmPassword) {
+            die("All fields are required.");
         }
 
-        $user = new User($_POST['email'], $_POST['password']);
-        $this->userRepository->save($user);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            die("Invalid email format.");
+        }
 
-        header("Location: /home");
-        exit;
+        if ($password !== $confirmPassword) {
+            echo "Passwords do not match.";
+        }
+
+        // Create User model and save to the repository
+        $user = new User($email, $password);
+
+        try {
+            $this->userRepository->save($user);
+            header("Location: /home");
+            exit;
+        } catch (PDOException $e) {
+            die("Error saving user: " . $e->getMessage());
+        }
     }
 }

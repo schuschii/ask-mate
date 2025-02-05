@@ -2,13 +2,17 @@
 
 namespace App\Repositories;
 
+use AllowDynamicProperties;
 use App\Contracts\RepositoryInterface;
 use App\Core\Controller;
+use App\Core\Database;
+use App\Model\User;
 use PDO;
 
 #[AllowDynamicProperties] class UserRepository implements RepositoryInterface
 {
-    public function index(): void
+    private PDO $db;
+    public function __construct()
     {
         $this->db = Database::getConnection();
     }
@@ -29,13 +33,15 @@ use PDO;
         return $result ? (object)$result : null;
     }
 
-    public function save(object $entity): void
+    public function save(object $user): void
     {
-        $sql = "INSERT INTO resitered_user (name, email) VALUES (:name, :email)";
+        $sql = "INSERT INTO registered_user (email, password_hash, registration_time) 
+        VALUES (:email, :password_hash, :registration_time)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
-            'name' => $entity->name,
-            'email' => $entity->email
+            'email' => $user->getEmail(),
+            'password_hash' => password_hash($user->getPassword(), PASSWORD_DEFAULT),
+            'registration_time' => $user->getRegistrationTime()->format('Y-m-d H:i:s')
         ]);
     }
 

@@ -15,8 +15,7 @@
                         <input type="password" id="confirm-password" maxlength="255" name="confirm-password"
                                class="form-control" required/>
                     </div>
-                    <button type="submit" class="btn btn-success btn-block">Sign Up</button>
-
+                    <button type="submit">Sign Up</button>
                 </form>
             </div>
         </div>
