@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\Answer;
 use App\Repositories\AnswerRepository;
+use App\Core\SuperGlobalManager;
 
 class AnswerController extends Controller
 {
@@ -41,18 +42,22 @@ class AnswerController extends Controller
             die("Method Not Allowed");
         }
 
-        if (!isset($_POST['question_id'], $_POST['message'])) {
+        // Use SuperGlobalManager to get request data safely
+        $question_id_from_request = SuperGlobalManager::getRequest('question_id');
+        $message = SuperGlobalManager::getRequest('message');
+
+        if (!$question_id_from_request || !$message) {
             die("Invalid request. Missing fields.");
         }
-        $user_id = $_SESSION['user_id'] ?? 1;
+
+        $user_id = SuperGlobalManager::getSession('user_id', 1);
 
         $answer = new Answer(
-            (int)$question_id,
+            $question_id,
             $user_id,
             trim($_POST['message']),
             0
         );
-        var_dump($answer);
 
         $this->answerRepository->save($answer);
 
@@ -83,7 +88,11 @@ class AnswerController extends Controller
             die("Method Not Allowed");
         }
 
-        if (!isset($_POST['id'], $_POST['message'])) {
+        // Use SuperGlobalManager to get request data safely
+        $answer_id_from_request = SuperGlobalManager::getRequest('id');
+        $message = SuperGlobalManager::getRequest('message');
+
+        if (!$answer_id_from_request || !$message) {
             die("Invalid request. Missing fields.");
         }
 
@@ -95,7 +104,7 @@ class AnswerController extends Controller
             die("Answer not found.");
         }
 
-        $answer->message = htmlentities(trim($_POST['message']));
+        $answer->message = htmlentities(trim($message));
 
         $this->answerRepository->update($answer);
 
@@ -106,8 +115,12 @@ class AnswerController extends Controller
     public function deleteAnswer(int $id): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
             // Step 1: Show the delete confirmation page
-            if (!isset($_GET['id'])) {
+
+            $answer_id_from_request = SuperGlobalManager::getRequest('id');
+
+            if (!$answer_id_from_request) {
                 http_response_code(400);
                 die("Invalid request. Missing answer ID.");
             }
@@ -123,7 +136,11 @@ class AnswerController extends Controller
             $this->render('answer.delete', ['answer' => $answer]);
         } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Step 2: Handle the actual deletion
-            if (!isset($_POST['id'], $_POST['question_id'])) {
+
+            $answer_id_from_post = SuperGlobalManager::getRequest('id');
+            $question_id_from_post = SuperGlobalManager::getRequest('question_id');
+
+            if (!$answer_id_from_post || !$question_id_from_post) {
                 http_response_code(400);
                 die("Invalid request.");
             }
@@ -139,7 +156,7 @@ class AnswerController extends Controller
             $this->answerRepository->delete($id);
 
             // Redirect back to the question page
-            header("Location: /answers/list/{$_POST['question_id']}");
+            header("Location: /answers/list/{$question_id_from_post}");
             exit;
         } else {
             http_response_code(405);

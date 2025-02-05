@@ -9,7 +9,9 @@ namespace GlobalNamespace {
 namespace App\Controllers {
 
     use App\Core\Controller;
+    use App\Models\Question;
     use App\Repositories\QuestionRepository;
+    use App\Core\SuperGlobalManager;
 
     class QuestionController extends Controller
     {
@@ -39,19 +41,22 @@ namespace App\Controllers {
         }
 
 
-        // should superglobalmanager be used here???
         public function addQuestion(): void
         {
-            $title = $_POST['title'] ?? '';
-            $message = $_POST['message'] ?? '';
-            $user_id = $_SESSION['user_id'] ?? 1;
+            $title = SuperGlobalManager::getRequest('title', ''); // Get POST['title']
+            $message = SuperGlobalManager::getRequest('message', ''); // Get POST['message']
+            $user_id = SuperGlobalManager::getSession('user_id', 1); // Get SESSION['user_id']
 
             if ($title && $message) {
-                $question = (object)[
-                    'title' => $title,
-                    'message' => $message,
-                    'id_registered_user' => $user_id
-                ];
+
+                $question = new Question (
+                    0,
+                    $user_id,
+                $title,
+                $message,
+                0
+                );
+
                 $this->questionRepository->save($question);
 
                 $newQuestionId = $this->questionRepository->getLastInsertId();
@@ -96,8 +101,9 @@ namespace App\Controllers {
         public function updateQuestion(int $id): void
         {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $title = $_POST['title'] ?? null;
-                $message = $_POST['message'] ?? null;
+
+                $title = SuperGlobalManager::getRequest('title');
+                $message = SuperGlobalManager::getRequest('message');
 
                 if ($title && $message) {
                     $question = $this->questionRepository->find($id);
