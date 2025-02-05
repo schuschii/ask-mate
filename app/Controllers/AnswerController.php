@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Core\Template;
 use App\Models\Answer;
 use App\Repositories\AnswerRepository;
 
@@ -27,15 +26,14 @@ class AnswerController extends Controller
     }
 
 
-    public function create( $question_id): void
+    public function create(int $question_id): void
     {
-        $questionInt = (int)$question_id;
 
-        $this->render('answer.create', ['question_id' => $questionInt]);
+        $this->render('answer.create', ['question_id' => $question_id]);
     }
 
 
-    public function store($question_id): void
+    public function store(int $question_id): void
     {
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -64,7 +62,7 @@ class AnswerController extends Controller
     }
 
 
-    public function editAnswer($id): void
+    public function editAnswer(int $id): void
     {
 
         $answer = $this->answerRepository->find($id);
@@ -78,7 +76,7 @@ class AnswerController extends Controller
         $this->render('answer.edit', ['answer' => $answer]);
     }
 
-    public function updateAnswer($id): void
+    public function updateAnswer(int $id): void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             http_response_code(405);
@@ -105,7 +103,7 @@ class AnswerController extends Controller
         exit;
     }
 
-    public function deleteAnswer($id): void
+    public function deleteAnswer(int $id): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             // Step 1: Show the delete confirmation page

@@ -9,7 +9,7 @@
 <h1>{{ $title }}</h1>
 
 
-<form action="/add-question" method="POST">
+<form action="/question/add" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" id="title" required><br><br>
 

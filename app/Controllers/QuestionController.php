@@ -8,25 +8,24 @@ namespace GlobalNamespace {
 
 namespace App\Controllers {
 
-    use App\Contracts\QuestionRepository;
     use App\Core\Controller;
-    use PDO;
+    use App\Repositories\QuestionRepository;
 
     class QuestionController extends Controller
     {
 
-        private $repository;
+        private questionRepository $questionRepository;
 
-        public function __construct(PDO $connection)
+        public function __construct()
         {
             parent::__construct();
-            $this->repository = new QuestionRepository($connection);
+            $this->questionRepository = new QuestionRepository();
         }
 
         public function showQuestions(): void
         {
-            $questions = $this->repository->findAll(); //returns array of question objs
-            $this->render('questions', [
+            $questions = $this->questionRepository->findAll(); //returns array of question objs
+            $this->render('question.questions', [
                 'title' => 'List all questions',
                 'questions' => $questions
             ]);
@@ -34,7 +33,7 @@ namespace App\Controllers {
 
         public function showAddQuestion(): void
         {
-            $this->render('add-question', [
+            $this->render('question.add_question', [
                 'title' => 'Add a new question'
             ]);
         }
@@ -45,19 +44,21 @@ namespace App\Controllers {
         {
             $title = $_POST['title'] ?? '';
             $message = $_POST['message'] ?? '';
+            $user_id = $_SESSION['user_id'] ?? 1;
 
             if ($title && $message) {
                 $question = (object)[
                     'title' => $title,
-                    'message' => $message
+                    'message' => $message,
+                    'id_registered_user' => $user_id
                 ];
-                $this->repository->save($question);
+                $this->questionRepository->save($question);
 
-                $newQuestionId = $this->repository->getLastInsertId();
+                $newQuestionId = $this->questionRepository->getLastInsertId();
                 header("Location: /question/{$newQuestionId}");
                 exit;
             }
-            $this->render('add_question', [
+            $this->render('question.add_question', [
                 'title' => 'Add a new question',
                 'error' => 'Please fill in all fields'
             ]);
@@ -65,8 +66,10 @@ namespace App\Controllers {
 
         public function showQuestion(int $id): void
         {
-            $question = $this->repository->find($id);
-            $this->render('question', [
+            $question = $this->questionRepository->find($id);
+
+
+            $this->render('question.details', [
                 'title' => 'View Question',
                 'question' => $question
             ]);
@@ -74,19 +77,19 @@ namespace App\Controllers {
 
         public function deleteQuestion(int $id): void
         {
-            $this->repository->delete($id);
+            $this->questionRepository->delete($id);
             header("Location: /questions");
             exit();
         }
 
         public function showEditQuestion(int $id): void
         {
-            $question = $this->repository->find($id);
+            $question = $this->questionRepository->find($id);
             if (!$question) {
                 die("Question not found!");
             }
 
-            $this->render('edit_question', ['title' => "Edit Question", 'question' => $question]);
+            $this->render('question.edit_question', ['title' => "Edit Question", 'question' => $question]);
         }
 
 
@@ -97,7 +100,7 @@ namespace App\Controllers {
                 $message = $_POST['message'] ?? null;
 
                 if ($title && $message) {
-                    $question = $this->repository->find($id);
+                    $question = $this->questionRepository->find($id);
                     if (!$question) {
                         die("Question not found!");
                     }
@@ -105,9 +108,9 @@ namespace App\Controllers {
                     $question->title = $title;
                     $question->message = $message;
 
-                    $this->repository->update($question);
+                    $this->questionRepository->update($question);
 
-                    header("Location: /question/view/$id");
+                    header("Location: /question/$id");
                     exit;
                 }
             }
