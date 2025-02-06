@@ -22,6 +22,7 @@ class Template
 
             // Add multiple view directories to BladeOne
             $viewPaths = [
+                $views . '/tag',
                 $views . '/answer',   // Path to /views/answer
                 $views . '/question', // Path to /views/question
                 $views                // You can also include the root /views

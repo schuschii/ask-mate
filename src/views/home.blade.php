@@ -6,8 +6,9 @@
     <title>{{ $title }}</title>
 </head>
 <body>
-
 <div class="container">
+    <h1>Welcome!</h1>
+    <h3>Ask any PHP workbook related questions.</h3>
     <h1>Welcome to AskMate!</h1>
 
     <!-- Check Questions Button -->
