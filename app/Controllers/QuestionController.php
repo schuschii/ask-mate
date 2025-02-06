@@ -8,8 +8,8 @@ namespace GlobalNamespace {
 
 namespace App\Controllers {
 
-    use App\Contracts\QuestionRepository;
     use App\Core\Controller;
+    use App\Repositories\QuestionRepository;
     use PDO;
 
     class QuestionController extends Controller
@@ -22,6 +22,17 @@ namespace App\Controllers {
             parent::__construct();
             $this->repository = new QuestionRepository($connection);
         }
+
+        public function search(): void
+        {
+            $searchTerm = $_GET['q'] ?? ''; //searchTerm from URL
+            $questions = $this->repository->searchQuestion($searchTerm);
+            $this->render('questions', [
+                'title' => 'List all matching questions',
+                'questions' => $questions
+            ]);
+        }
+
 
         public function showQuestions(): void
         {
