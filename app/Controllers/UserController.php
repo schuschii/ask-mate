@@ -3,8 +3,9 @@
 namespace App\Controllers;
 
 use App\Core\Controller;
-use App\Model\User;
+use App\Models\User;
 use App\Repositories\UserRepository;
+
 class UserController extends Controller
 {
     private UserRepository $userRepository;

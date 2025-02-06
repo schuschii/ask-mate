@@ -4,9 +4,7 @@ namespace App\Repositories;
 
 use AllowDynamicProperties;
 use App\Contracts\RepositoryInterface;
-use App\Core\Controller;
 use App\Core\Database;
-use App\Model\User;
 use PDO;
 
 #[AllowDynamicProperties] class UserRepository implements RepositoryInterface

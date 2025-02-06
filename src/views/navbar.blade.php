@@ -15,8 +15,10 @@
         @if(isset($_SESSION['user_id']))
             <a href="/logout">Logout</a>
         @else
-            <a href="/login">Login</a>
+            <a href="user/login">Login</a>
+            <a href="/user/register">Register</a>
         @endif
+        <a href="/tags">Tags</a>
     </div>
 </div>
 

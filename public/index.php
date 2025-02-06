@@ -53,6 +53,7 @@ $router = new Router($pdo);
 
 // Define routes
 
+//User routes
 $router->add('GET', '/', [HomeController::class, 'index']);
 $router->add('GET', '/home', [HomeController::class, 'index']);
 //register
@@ -64,6 +65,8 @@ $router->add('GET', '/user/login', [UserController::class, 'login']);
 $router->add('POST', '/user/login', [UserController::class, 'loginUser']);
 
 $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
+
+// Needs logout route and method
 
 // Question routes
 $router->add('GET', '/questions', [QuestionController::class, 'showQuestions']);
@@ -85,6 +88,8 @@ $router->add('POST', '/delete/answer_id/{id}', [AnswerController::class, 'delete
 
 $router->add('GET', '/answer/edit/id/{id}', [AnswerController::class, 'editAnswer']);
 $router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'updateAnswer']);
+
+// Tag routes
 $router->add('GET', '/tags', [TagController::class, 'showTags']);
 $router->add('GET', '/tag/create', [TagController::class, 'showCreateTagForm']);
 $router->add('POST', '/tag/create', [TagController::class, 'createTag']);

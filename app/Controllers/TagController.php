@@ -3,22 +3,20 @@
 namespace App\Controllers;
 
 
-use App\Contracts\QuestionRepository;
+use App\Repositories\QuestionRepository;
 use App\Core\Controller;
-use App\Core\Database;
 use App\Repositories\TagRepository;
-use PDO;
 
 class TagController extends Controller
 {
     private TagRepository $tagRepository;
     private QuestionRepository $questionRepository;
 
-    public function __construct(PDO $connection)
+    public function __construct()
     {
         parent::__construct();
         $this->tagRepository = new TagRepository();
-        $this->questionRepository = new QuestionRepository($connection);
+        $this->questionRepository = new QuestionRepository();
     }
 
     public function showTags(): void
