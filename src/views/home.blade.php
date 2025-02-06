@@ -6,7 +6,6 @@
     <title>{{ $title }}</title>
 </head>
 <body>
-
 <!-- Navigation Bar -->
 <div class="navbar">
     <div>
@@ -17,13 +16,15 @@
             <a href="/logout">Logout</a>
         @else
             <a href="/login">Login</a>
+            <a href="/user/register">Register</a>
         @endif
         <a href="/tags">Tags</a>
     </div>
 </div>
 
 <div class="container">
-    <h1>Welcome</h1>
+    <h1>Welcome!</h1>
+    <h3>Ask any PHP workbook related questions.</h3>
 
     <!-- Check Questions Button -->
     <a href="/questions">

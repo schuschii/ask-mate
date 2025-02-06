@@ -6,9 +6,24 @@
     <title>{{ $title }}</title>
 </head>
 <body>
+<div class="navbar">
+    <div>
+        <a href="/">Home</a>
+    </div>
+    <div>
+        @if(isset($_SESSION['user_id']))
+            <a href="/logout">Logout</a>
+        @else
+            <a href="/login">Login</a>
+            <a href="/user/register">Register</a>
+        @endif
+    </div>
+</div>
 <h1>{{ $title }}</h1>
+
 <p></p>
 <a href="/tags">View All Tags</a>
+
 @foreach ($questions as $question)
     <div class="question">
         <h2>{{ $question->title }}</h2>
