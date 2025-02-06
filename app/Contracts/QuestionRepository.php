@@ -77,6 +77,27 @@ class QuestionRepository implements RepositoryInterface
         $stmt->bindParam(':id', $id, PDO::PARAM_INT); //casting id to int from url
         $stmt->execute();
     }
+    public function countQuestionsByTag(int $tagId): int
+    {
+        $sql = "SELECT COUNT(*) as question_count 
+                FROM rel_question_tag 
+                WHERE id_tag = :tag_id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['tag_id' => $tagId]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+        return $result ? (int) $result->question_count : 0;
+    }
+    public function findQuestionsByTag(int $tagId): array
+    {
+        $sql = "SELECT q.* FROM questions q
+                INNER JOIN rel_question_tag qt ON q.id = qt.id_question
+                WHERE qt.id_tag = :tag_id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['tag_id' => $tagId]);
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 
 
 }

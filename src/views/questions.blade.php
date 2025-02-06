@@ -21,6 +21,9 @@
 </div>
 <h1>{{ $title }}</h1>
 
+<p></p>
+<a href="/tags">View All Tags</a>
+
 @foreach ($questions as $question)
     <div class="question">
         <h2>{{ $question->title }}</h2>

@@ -18,6 +18,7 @@
             <a href="/login">Login</a>
             <a href="/user/register">Register</a>
         @endif
+        <a href="/tags">Tags</a>
     </div>
 </div>
 
