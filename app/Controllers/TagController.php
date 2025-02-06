@@ -47,4 +47,28 @@ class TagController extends Controller
         header("Location: /tags");
         exit();
     }
+    public function addTagToQuestion(int $id): void
+    {
+        $questionId = $_POST['question_id'] ?? null;
+        $tagId = $_POST['tag_id'] ?? null;
+
+        if ($questionId && $tagId) {
+            $this->tagRepository->assignTagToQuestion($id, $tagId);
+        }
+
+        header("Location: /questions");
+        exit();
+    }
+    public function removeTagFromQuestion(int $id): void
+    {
+        $questionId = $_POST['question_id'] ?? null;
+        $tagId = $_POST['tag_id'] ?? null;
+
+        if ($questionId && $tagId) {
+            $this->tagRepository->removeTagFromQuestion($id, $tagId);
+        }
+
+        header("Location: /questions");
+        exit();
+    }
 }

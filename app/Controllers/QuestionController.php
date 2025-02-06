@@ -12,16 +12,19 @@ namespace App\Controllers {
     use App\Models\Question;
     use App\Repositories\QuestionRepository;
     use App\Core\SuperGlobalManager;
+    use App\Repositories\TagRepository;
 
     class QuestionController extends Controller
     {
 
-        private questionRepository $questionRepository;
+        private QuestionRepository $questionRepository;
+        private TagRepository $tagRepository;
 
         public function __construct()
         {
             parent::__construct();
             $this->questionRepository = new QuestionRepository();
+            $this->tagRepository = new TagRepository();
         }
 
         public function search(): void
@@ -43,10 +46,15 @@ namespace App\Controllers {
 
         public function showQuestions(): void
         {
-            $questions = $this->questionRepository->findAll(); //returns array of question objs
+            $questions = $this->questionRepository->findAll();
+            $allTags = $this->tagRepository->findAll();
+            foreach ($questions as $question) {
+                $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+            }
             $this->render('question.questions', [
                 'title' => 'List all questions',
-                'questions' => $questions
+                'questions' => $questions,
+                'allTags' => $allTags
             ]);
         }
 

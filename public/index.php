@@ -96,6 +96,8 @@ $router->add('GET', '/search', [QuestionController::class, 'search']);
 $router->add('GET', '/tags', [TagController::class, 'showTags']);
 $router->add('GET', '/tag/create', [TagController::class, 'showCreateTagForm']);
 $router->add('POST', '/tag/create', [TagController::class, 'createTag']);
+$router->add('POST', '/question/{id}/addTag', [TagController::class, 'addTagToQuestion']);
+$router->add('POST', '/question/{id}/removeTag', [TagController::class, 'removeTagFromQuestion']);
 // Dispatch the request
 $router->dispatch();
 

@@ -40,10 +40,48 @@
         <p>{{ $question->message }}</p>
         <p><strong>Votes:</strong> {{ $question->vote_number }}</p>
         <p><strong>Submitted on:</strong> {{ $question->submission_time }}</p>
+        <div>
+            <p>Tags:</p>
+            <ul>
+                @foreach ($question->tags as $tag)
+                    {{ $tag->name }}
+                    <form method="POST" action="/question/{{ $question->id }}/removeTag" style="display:inline;">
+                        <input type="hidden" name="question_id" value="{{ $question->id }}">
+                        <input type="hidden" name="tag_id" value="{{ $tag->id }}">
+                        <button type="submit">❌ Remove</button>
+                    </form>
+                @endforeach
+            </ul>
+            <form method="POST" action="/question/{{ $question->id }}/addTag">
+                <input type="hidden" name="question_id" value="{{ $question->id }}">
 
+                <label for="tag-{{ $question->id }}">Add Tag:</label>
+                <select name="tag_id" id="tag-{{ $question->id }}">
+                    @foreach ($allTags as $tag)
+                        @php
+                            $isAssigned = false;
+                            foreach ($question->tags as $assignedTag) {
+                                if ($assignedTag->id == $tag->id) {
+                                    $isAssigned = true;
+                                    break;
+                                }
+                            }
+                        @endphp
+
+                        @if(!$isAssigned)
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+
+                <button type="submit">➕ Add</button>
+            </form>
+        </div>
         <a href="/create/{{ $question->id }}">Add a New Answer</a>
         <a href="/question/edit/{{ $question->id }}">Edit</a>
-        <a href="/answers/list/{{ $question->id }}"><button>Show Answers</button></a>
+        <a href="/answers/list/{{ $question->id }}">
+            <button>Show Answers</button>
+        </a>
 
         <a href="/create/{{ $question->id }}">Add a New Answer</a>
         <a href="/question/edit/{{ $question->id }}">Edit</a>
@@ -52,7 +90,7 @@
         </a>
         <form action="/question/delete/{{ $question->id }}" method="POST">
             <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" >Delete</button>
+            <button type="submit">Delete</button>
         </form>
         <hr>
     </div>
