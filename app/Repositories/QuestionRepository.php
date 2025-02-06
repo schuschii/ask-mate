@@ -3,16 +3,16 @@
 namespace App\Repositories;
 
 use App\Contracts\RepositoryInterface;
+use App\Core\Database;
 use PDO;
 
 class QuestionRepository implements RepositoryInterface
 {
+    private ?PDO $connection;
 
-    private $connection;
-
-    public function __construct($connection)
+    public function __construct()
     {
-        $this->connection = $connection;
+        $this->connection = Database::getConnection();
     }
     /**
      * @inheritDoc
@@ -42,10 +42,11 @@ class QuestionRepository implements RepositoryInterface
      */
     public function save(object $entity): void
     {
-        $sql = "INSERT INTO question (title, message, vote_number) VALUES (:title, :message, 0)";
+        $sql = "INSERT INTO question (title, message, vote_number, id_registered_user) VALUES (:title, :message, 0, :id_registered_user)";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':title', $entity->title);
         $stmt->bindParam(':message', $entity->message);
+        $stmt->bindParam(':id_registered_user', $entity->id_registered_user);
         $stmt->execute();
     }
 
@@ -70,12 +71,40 @@ class QuestionRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function delete(int $id): void
+    public function delete(int $id): void       // this or: ON DELETE CASCADE in the database
     {
+        // Step 1: Delete all answers associated with the question
+        $sql = "DELETE FROM answer WHERE id_question = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Step 2: Delete the question
         $sql = "DELETE FROM question WHERE id = :id";
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT); //casting id to int from url
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
+    }
+    public function countQuestionsByTag(int $tagId): int
+    {
+        $sql = "SELECT COUNT(*) as question_count 
+                FROM rel_question_tag 
+                WHERE id_tag = :tag_id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['tag_id' => $tagId]);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+
+        return $result ? (int) $result->question_count : 0;
+    }
+    public function findQuestionsByTag(int $tagId): array
+    {
+        $sql = "SELECT q.* FROM questions q
+                INNER JOIN rel_question_tag qt ON q.id = qt.id_question
+                WHERE qt.id_tag = :tag_id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['tag_id' => $tagId]);
+
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
 

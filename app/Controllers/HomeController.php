@@ -8,6 +8,11 @@ class HomeController extends Controller
 {
     public function index(): void
     {
-        $this->render('home', ['title' => 'Welcome to My Framework!']);
+        $this->render('home', ['title' => 'Welcome to AskMate!']);
+    }
+
+    public function showNavbar(): void
+    {
+        $this->render('navbar');
     }
 }

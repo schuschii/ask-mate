@@ -2,14 +2,14 @@
 
 namespace App\Repositories;
 
-use AllowDynamicProperties;
 use App\Contracts\RepositoryInterface;
 use App\Core\Database;
 use PDO;
 
-#[AllowDynamicProperties] class AnswerRepository implements RepositoryInterface
+class AnswerRepository implements RepositoryInterface
 {
 
+private ?PDO $db;
 
     public function __construct()
     {

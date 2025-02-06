@@ -22,28 +22,5 @@ class Answer
         $this->vote_number = $votes;
         $this->submission_time = new DateTime('now');
     }
-    public function setMessage($message): void
-    {
-        $this->message = htmlentities($message);
-}
 
-    public function getIdQuestion(): int
-    {
-        return $this->id_question;
-    }
-
-    public function getMessage(): string
-    {
-        return $this->message;
-    }
-
-    public function getIdRegisteredUser(): int
-    {
-        return $this->id_registered_user;
-    }
-
-    public function getVotenumer(): int
-    {
-        return $this->vote_number;
-    }
 }
