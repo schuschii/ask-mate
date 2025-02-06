@@ -79,7 +79,6 @@ use PDO;
             return false;
         }
 
-        echo "actual password: " . $user->password_hash . "<br>";
         return password_verify($password, $user->password_hash);
     }
 }
