@@ -27,10 +27,16 @@ namespace App\Controllers {
         {
             $searchTerm = $_GET['q'] ?? ''; //searchTerm from URL
             $questions = $this->repository->searchQuestion($searchTerm);
-            $this->render('questions', [
-                'title' => 'List all matching questions',
-                'questions' => $questions
-            ]);
+
+            if (empty($questions)){
+                $this->render('no_results', ['searchTerm' => $searchTerm]);
+            } else {
+
+                $this->render('questions', [
+                    'title' => 'List all matching questions',
+                    'questions' => $questions
+                ]);
+            }
         }
 
 
