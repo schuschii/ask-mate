@@ -35,7 +35,7 @@ namespace App\Controllers {
             $searchTerm = $_GET['q'] ?? ''; //searchTerm from URL
             $questions = $this->questionRepository->searchQuestion($searchTerm);
 
-            if (empty($questions)){
+            if (empty($questions)) {
                 $this->render('no_results', ['searchTerm' => $searchTerm]);
             } else {
 
@@ -63,8 +63,10 @@ namespace App\Controllers {
 
         public function showAddQuestion(): void
         {
+            $allTags = $this->tagRepository->findAll();
             $this->render('question.add_question', [
-                'title' => 'Add a new question'
+                'title' => 'Add a new question',
+                'allTags' => $allTags
             ]);
         }
 
@@ -74,26 +76,30 @@ namespace App\Controllers {
             $title = SuperGlobalManager::getRequest('title', ''); // Get POST['title']
             $message = SuperGlobalManager::getRequest('message', ''); // Get POST['message']
             $user_id = SuperGlobalManager::getSession('user_id', 1); // Get SESSION['user_id']
+            $tagIds = SuperGlobalManager::getRequest('tag_ids', []);
 
             if ($title && $message) {
-
                 $question = new Question (
                     0,
                     $user_id,
-                $title,
-                $message,
-                0
+                    $title,
+                    $message,
+                    0
                 );
-
                 $this->questionRepository->save($question);
-
                 $newQuestionId = $this->questionRepository->getLastInsertId();
+
+                foreach ($tagIds as $tagId) {
+                    $this->tagRepository->assignTagToQuestion($newQuestionId, $tagId);
+                }
+
                 header("Location: /question/{$newQuestionId}");
                 exit;
             }
             $this->render('question.add_question', [
                 'title' => 'Add a new question',
-                'error' => 'Please fill in all fields'
+                'error' => 'Please fill in all fields',
+
             ]);
         }
 
