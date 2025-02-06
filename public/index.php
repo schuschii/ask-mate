@@ -92,8 +92,6 @@ $router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'update
 $router->add('GET', '/search', [QuestionController::class, 'search']);
 
 
-
-
 // Tag routes
 $router->add('GET', '/tags', [TagController::class, 'showTags']);
 $router->add('GET', '/tag/create', [TagController::class, 'showCreateTagForm']);

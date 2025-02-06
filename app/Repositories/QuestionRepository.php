@@ -108,6 +108,7 @@ class QuestionRepository implements RepositoryInterface
     }
 
 
+
     public function searchQuestion(string $search): array
     {
         $sql = "SELECT * FROM question WHERE title LIKE :search OR message LIKE :search";
@@ -116,4 +117,5 @@ class QuestionRepository implements RepositoryInterface
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
 }
