@@ -40,7 +40,7 @@ private ?PDO $db;
     }
     public function findByQuestion(int $question_id): array
     {
-        $sql = "SELECT * FROM answer WHERE id_question = :question_id ORDER BY submission_time ASC";
+        $sql = "SELECT a.id, a.id_question, a.id_registered_user, a.message, a.vote_number, a.submission_time, r.email FROM answer a JOIN registered_user r ON a.id_registered_user = r.id WHERE a.id_question = :question_id ORDER BY a.submission_time ASC";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['question_id' => $question_id]);
 

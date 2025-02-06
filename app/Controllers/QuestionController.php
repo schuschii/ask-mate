@@ -13,18 +13,21 @@ namespace App\Controllers {
     use App\Repositories\QuestionRepository;
     use App\Core\SuperGlobalManager;
     use App\Repositories\TagRepository;
+    use App\Repositories\AnswerRepository;
 
     class QuestionController extends Controller
     {
 
         private QuestionRepository $questionRepository;
         private TagRepository $tagRepository;
+        private answerRepository $answerRepository;
 
         public function __construct()
         {
             parent::__construct();
             $this->questionRepository = new QuestionRepository();
             $this->tagRepository = new TagRepository();
+            $this->answerRepository = new answerRepository();
         }
 
         public function search(): void
@@ -97,11 +100,12 @@ namespace App\Controllers {
         public function showQuestion(int $id): void
         {
             $question = $this->questionRepository->find($id);
-
+            $answers = $this->answerRepository->findByQuestion($question->id);
 
             $this->render('question.details', [
                 'title' => 'View Question',
-                'question' => $question
+                'question' => $question,
+                'answers' => $answers
             ]);
         }
 

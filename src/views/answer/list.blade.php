@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Answers List</title>
-</head>
-<body>
+
 <h1>All Answers</h1>
 
 <table>
     <thead>
     <tr>
         <th>ID</th>
-        <th>Question ID</th>
-        <th>User ID</th>
-        <th>Message</th>
         <th>Votes</th>
+        <th>Message</th>
+        <th>Username</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -23,10 +15,10 @@
     @foreach($answers as $answer)
         <tr>
             <td>{{ $answer->id }}</td>
-            <td>{{ $answer->id_question }}</td>
-            <td>{{ $answer->id_registered_user }}</td>
-            <td>{{ $answer->message }}</td>
+            <!--<td>{{ $answer->id_question }}</td> -->
             <td>{{ $answer->vote_number }}</td>
+            <td>{{ $answer->message }}</td>
+            <td>{{ $answer->email }}</td>
             <td>
                 @if(1 == $answer->id_registered_user)
                     <!-- Edit Answer Button -->
@@ -57,6 +49,3 @@
         return confirm("Are you sure you want to delete answer ID: " + answerId + "? This action cannot be undone.");
     }
 </script>
-
-</body>
-</html>
