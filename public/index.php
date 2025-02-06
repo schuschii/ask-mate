@@ -3,7 +3,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 
-use App\Controllers\TagController;
+
 use App\Test;
 
 $test = new Test();
@@ -45,6 +45,7 @@ use App\Controllers\UserController;
 use App\Controllers\HomeController;
 use App\Controllers\QuestionController;
 use App\Controllers\AnswerController;
+use App\Controllers\TagController;
 
 $controller = new HomeController();
 $controller->showNavbar();
@@ -98,6 +99,9 @@ $router->add('GET', '/tag/create', [TagController::class, 'showCreateTagForm']);
 $router->add('POST', '/tag/create', [TagController::class, 'createTag']);
 $router->add('POST', '/question/{id}/addTag', [TagController::class, 'addTagToQuestion']);
 $router->add('POST', '/question/{id}/removeTag', [TagController::class, 'removeTagFromQuestion']);
+$router->add('POST', '/tag/remove/{id}', [TagController::class, 'removeTag']);
+
+
 // Dispatch the request
 $router->dispatch();
 

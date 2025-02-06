@@ -62,7 +62,7 @@ class AnswerController extends Controller
         $this->answerRepository->save($answer);
 
 
-        header("Location: /questions");
+        header("Location: /question/{$question_id}");
         exit;
     }
 
@@ -156,7 +156,7 @@ class AnswerController extends Controller
             $this->answerRepository->delete($id);
 
             // Redirect back to the question page
-            header("Location: /answers/list/{$question_id_from_post}");
+            header("Location: /question/{$question_id_from_post}");
             exit;
         } else {
             http_response_code(405);

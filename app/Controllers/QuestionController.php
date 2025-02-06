@@ -39,9 +39,14 @@ namespace App\Controllers {
                 $this->render('no_results', ['searchTerm' => $searchTerm]);
             } else {
 
+                $allTags = $this->tagRepository->findAll();
+                foreach ($questions as $question) {
+                    $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+                }
                 $this->render('questions', [
                     'title' => 'List all matching questions',
-                    'questions' => $questions
+                    'questions' => $questions,
+                    'allTags' => $allTags
                 ]);
             }
         }
@@ -51,9 +56,11 @@ namespace App\Controllers {
         {
             $questions = $this->questionRepository->findAll();
             $allTags = $this->tagRepository->findAll();
+
             foreach ($questions as $question) {
                 $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
             }
+
             $this->render('question.questions', [
                 'title' => 'List all questions',
                 'questions' => $questions,
@@ -102,10 +109,16 @@ namespace App\Controllers {
             $question = $this->questionRepository->find($id);
             $answers = $this->answerRepository->findByQuestion($question->id);
 
+            $allTags = $this->tagRepository->findAll();
+
+           
+            $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+
             $this->render('question.details', [
                 'title' => 'View Question',
                 'question' => $question,
-                'answers' => $answers
+                'answers' => $answers,
+                'tags' => $allTags
             ]);
         }
 

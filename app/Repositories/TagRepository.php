@@ -30,7 +30,7 @@ use PDO;
 
     public function delete(int $id): void
     {
-        $sql = "DELETE FROM tag WHERE id_question = :id_question";
+        $sql = "DELETE FROM tag WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
     }

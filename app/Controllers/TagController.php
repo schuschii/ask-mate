@@ -47,6 +47,14 @@ class TagController extends Controller
         header("Location: /tags");
         exit();
     }
+
+    public function removeTag(int $id): void {
+        
+        $this->tagRepository->delete($id);
+
+        header("Location: /tags");
+        exit();
+    }
     public function addTagToQuestion(int $id): void
     {
         $questionId = $_POST['question_id'] ?? null;
