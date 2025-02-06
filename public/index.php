@@ -3,12 +3,13 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 
+use App\Controllers\TagController;
 use App\Test;
 
 $test = new Test();
 $test->sayHello();
-//------------------------//
 
+//------------------------//
 
 
 use App\Core\Config;
@@ -65,7 +66,9 @@ $router->add('POST', '/answers/post/{question_id}', [AnswerController::class, 's
 $router->add('POST', '/delete/answer_id/{id}', [AnswerController::class, 'deleteAnswer']);
 $router->add('GET', '/answer/edit/id/{id}', [AnswerController::class, 'editAnswer']);
 $router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'updateAnswer']);
-
+$router->add('GET', '/tags', [TagController::class, 'showTags']);
+$router->add('GET', '/tag/create', [TagController::class, 'showCreateTagForm']);
+$router->add('POST', '/tag/create', [TagController::class, 'createTag']);
 // Dispatch the request
 $router->dispatch();
 

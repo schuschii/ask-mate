@@ -18,6 +18,7 @@
         @else
             <a href="/login">Login</a>
         @endif
+        <a href="/tags">Tags</a>
     </div>
 </div>
 
