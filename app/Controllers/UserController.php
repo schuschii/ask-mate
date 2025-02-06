@@ -20,6 +20,38 @@ class UserController extends Controller
         $this->render('auth.login');
     }
 
+    public function loginUser(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            die("Method Not Allowed");
+        }
+
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+
+        if (!$email || !$password) {
+            echo "All fields are required.";
+        }
+
+        $user = $this->userRepository->findByEmail($email);
+
+        if (!$user) {
+            echo "User not found. Try again.";
+        }
+
+        if (!$this->userRepository->isPasswordValid($email, $password)) {
+            die("Invalid password.");
+        } else {
+            echo "GOOD PASSWORD";
+        }
+
+        // Password is valid; set session and redirect
+        $_SESSION['user'] = $user->id;
+        header("Location: /home");
+        exit;
+    }
+
     public function createUser(): void
     {
         $this->render('auth.signup');;

@@ -51,11 +51,13 @@ $router = new Router($pdo);
 
 $router->add('GET', '/', [HomeController::class, 'index']);
 $router->add('GET', '/home', [HomeController::class, 'index']);
-//bade template:
+//register
 $router->add('GET', '/user/register', [UserController::class, 'createUser']);
 //actually passing data here:
 $router->add('POST', '/user/register', [UserController::class, 'saveUser']);
+//login
 $router->add('GET', '/user/login', [UserController::class, 'login']);
+$router->add('POST', '/user/login', [UserController::class, 'loginUser']);
 
 $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
 $router->add('GET', '/questions', [QuestionController::class, 'showQuestions']);

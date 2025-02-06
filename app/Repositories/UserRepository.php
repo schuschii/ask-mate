@@ -61,4 +61,25 @@ use PDO;
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
     }
+
+    public function findByEmail(string $email): ?object
+    {
+        $sql = "SELECT * FROM registered_user WHERE email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (object)$result : null;
+    }
+
+    public function isPasswordValid(string $email, string $password): bool
+    {
+        $user = $this->findByEmail($email);
+
+        if (!$user) {
+            return false;
+        }
+
+        echo "actual password: " . $user->password_hash . "<br>";
+        return password_verify($password, $user->password_hash);
+    }
 }
