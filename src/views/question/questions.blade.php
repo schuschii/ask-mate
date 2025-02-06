@@ -24,15 +24,28 @@
 <p></p>
 <a href="/tags">View All Tags</a>
 
+
+<!-- Search Form -->
+<form action="/search" method="GET">
+    <input type="text" name="q" placeholder="Search questions"/>
+    <button type="submit">Search</button>
+</form>
+
+<p></p>
+<!-- Question List -->
+
 @foreach ($questions as $question)
     <div class="question">
         <h2>{{ $question->title }}</h2>
         <p>{{ $question->message }}</p>
         <p><strong>Votes:</strong> {{ $question->vote_number }}</p>
         <p><strong>Submitted on:</strong> {{ $question->submission_time }}</p>
-        <a href="/create/{{ $question->id }}">
-            Add a New Answer
-        </a>
+
+        <a href="/create/{{ $question->id }}">Add a New Answer</a>
+        <a href="/question/edit/{{ $question->id }}">Edit</a>
+        <a href="/answers/list/{{ $question->id }}"><button>Show Answers</button></a>
+
+        <a href="/create/{{ $question->id }}">Add a New Answer</a>
         <a href="/question/edit/{{ $question->id }}">Edit</a>
         <a href="/answers/list/{{ $question->id }}">
             <button>Show Answers</button>

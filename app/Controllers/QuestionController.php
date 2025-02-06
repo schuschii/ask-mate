@@ -24,6 +24,23 @@ namespace App\Controllers {
             $this->questionRepository = new QuestionRepository();
         }
 
+        public function search(): void
+        {
+            $searchTerm = $_GET['q'] ?? ''; //searchTerm from URL
+            $questions = $this->questionRepository->searchQuestion($searchTerm);
+
+            if (empty($questions)){
+                $this->render('no_results', ['searchTerm' => $searchTerm]);
+            } else {
+
+                $this->render('questions', [
+                    'title' => 'List all matching questions',
+                    'questions' => $questions
+                ]);
+            }
+        }
+
+
         public function showQuestions(): void
         {
             $questions = $this->questionRepository->findAll(); //returns array of question objs

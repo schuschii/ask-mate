@@ -88,6 +88,9 @@ $router->add('POST', '/delete/answer_id/{id}', [AnswerController::class, 'delete
 
 $router->add('GET', '/answer/edit/id/{id}', [AnswerController::class, 'editAnswer']);
 $router->add('post', '/answer/update/id/{id}', [AnswerController::class, 'updateAnswer']);
+//search?q=PHP
+$router->add('GET', '/search', [QuestionController::class, 'search']);
+
 
 // Tag routes
 $router->add('GET', '/tags', [TagController::class, 'showTags']);
