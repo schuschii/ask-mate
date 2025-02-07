@@ -10,8 +10,12 @@
 <h1>Post a New Answer</h1>
 
 <!-- Debugging: Display Question ID (Remove this after testing) -->
-<p>Debug: Question ID = {{ $question_id }}</p>
+<!-- <p>Debug: Question ID = {{ $question_id }}</p> -->
 
+<!-- Ensure the correct Question ID is used -->
+<a class="button-neutral" href="/questions">Back to Questions List</a>
+
+<div class="container">
 <form action="/answers/post/{{ $question_id }}" method="POST">
     <!-- CSRF Protection -->
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token'] ?? ''; ?>">
@@ -28,11 +32,9 @@
 
     <button type="submit">Submit</button>
 </form>
+</div>
 
-<br>
 
-<!-- Ensure the correct Question ID is used -->
-<a href="/questions">Back to Questions List</a>
 
 </body>
 </html>

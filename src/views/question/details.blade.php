@@ -7,19 +7,25 @@
 </head>
 <body>
 <h1>{{ $title }}</h1>
+<a class="button-neutral" href="/questions">Back to questions list</a>
 
-<div class="question">
+<div class="container">
     <h2>{{ $question->title }}</h2>
+
+    <div class="container bordered">
     <p>{{ $question->message }}</p>
     <p><strong>Votes:</strong> {{ $question->vote_number }}</p>
     <p><strong>Submitted on:</strong> {{ $question->submission_time }}</p>
+    </div>
 
-    <a href="/question/edit/{{ $question->id }}">Edit</a>
+    <div class="horizontal">
+    <a class="button" href="/question/edit/{{ $question->id }}">Edit</a>
 
     <form action="/question/delete/{{ $question->id }}" method="POST">
         <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" >Delete</button>
+        <button class="button-delete" type="submit" >Delete</button>
     </form>
+    </div>
 
     <div>
         <p>Tags:</p>
@@ -35,14 +41,14 @@
         </ul>
     </div>
 
-
-    <a href="/create/{{ $question->id }}">Add a New Answer</a>
+    <div class="container">
+    <a class="button-add-ans" href="/create/{{ $question->id }}">Add a New Answer</a>
+    </div>
 
     <!-- Include the answers list -->
     @include('answer.list', ['answers' => $answers])
 
 </div>
 
-<a href="/questions">Back to questions list</a>
 </body>
 </html>

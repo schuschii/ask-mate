@@ -6,7 +6,9 @@
 <body>
 
 <h1>Tags</h1>
+<a class="button-add" href="/tag/create">Add new Tag</a>
 
+<div class="container">
 <table border="1">
     <thead>
     <tr>
@@ -24,14 +26,15 @@
             <td>{{ $tag->question_count ?? 0 }}</td>
             <td>
                 <form action="/tag/remove/{{ $tag->id }}" method="POST">
-                    <button type="submit" >Delete</button>
+                    <button class="button-delete" type="submit" >Delete</button>
                 </form>
             </td>
         </tr>
     @endforeach
-    <a href="/tag/create">Add new Tag</a>
+
     </tbody>
 </table>
+</div>
 
 </body>
 </html>

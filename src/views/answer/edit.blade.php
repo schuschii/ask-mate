@@ -14,6 +14,7 @@ if (!isset($answer)) {
 <body>
 <h1>Edit Your Answer</h1>
 
+<div class="container">
 <form action="/answer/update/id/{{$answer->id}}" method="POST">
     <!-- CSRF Token -->
     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
@@ -26,10 +27,9 @@ if (!isset($answer)) {
     <label for="message">Message:</label>
     <textarea name="message" required><?= htmlspecialchars($answer->message) ?></textarea>
 
+<a class="button-neutral" href="/question/{{$answer->id_question}}">Cancel</a>
     <button type="submit">Save Changes</button>
 </form>
-
-<br>
-<a href="/answers/list/{{$answer->id_question}}">Cancel</a>
+</div>
 </body>
 </html>

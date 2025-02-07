@@ -8,6 +8,7 @@
 <body>
 <h1>{{ $title }}</h1>
 
+<div class="container">
 <!-- Create Question Form -->
 <form action="/question/add" method="POST">
     <label for="title">Title:</label>
@@ -27,6 +28,7 @@
 
     <input type="submit" value="Submit Question">
 </form>
+</div>
 
 </body>
 </html>

@@ -7,7 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\Test;
 
 $test = new Test();
-$test->sayHello();
+//$test->sayHello();
 
 //------------------------//
 
@@ -21,11 +21,11 @@ Database::connect();
 
 $pdo = Database::getConnection();
 
-if ($pdo) {
+/*if ($pdo) {
     echo "✅ Database connection established successfully!<br>";
 } else {
     echo "❌ Failed to connect to the database.";
-}
+}*/
 
 
 use App\Core\Logger;
@@ -34,10 +34,10 @@ use App\Core\Logger;
 $logger = new Logger();
 
 // Test different log levels
-$logger->info("Application started.");
-$logger->error("Something went wrong!", ["file" => "index.php", "line" => 23]);
+//$logger->info("Application started.");
+//$logger->error("Something went wrong!", ["file" => "index.php", "line" => 23]);
 
-echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
+//echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
 
 
 use App\Core\Router;

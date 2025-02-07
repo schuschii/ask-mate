@@ -73,7 +73,15 @@ class QuestionRepository implements RepositoryInterface
      */
     public function delete(int $id): void       // this or: ON DELETE CASCADE in the database
     {
-        // Step 1: Delete all answers associated with the question
+
+        // Step 1: Delete all related tags in the rel_question_tag table
+        $sql = "DELETE FROM rel_question_tag WHERE id_question = :id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        // Step 2: Delete all answers associated with the question
         $sql = "DELETE FROM answer WHERE id_question = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);

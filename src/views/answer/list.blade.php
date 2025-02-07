@@ -19,10 +19,10 @@
             <td>{{ $answer->vote_number }}</td>
             <td>{{ $answer->message }}</td>
             <td>{{ $answer->email }}</td>
-            <td>
+            <td class="horizontal">
                 @if(1 == $answer->id_registered_user)
                     <!-- Edit Answer Button -->
-                <a href="/answer/edit/id/{{$answer->id }}">Edit</a> |
+                <a class="button-neutral" href="/answer/edit/id/{{$answer->id }}">Edit</a>
 
                 <!-- Delete Answer Form -->
                  {{-- Change 1 to $_SESSION['user_id'] when authentication is implemented --}}
@@ -31,16 +31,16 @@
                     <input type="hidden" name="csrf_token" value="{{ $_SESSION['csrf_token'] ?? '' }}">
                     <input type="hidden" name="id" value="{{ $answer->id }}">
                     <input type="hidden" name="question_id" value="{{ $answer->id_question }}">
-                    <button type="submit">Delete</button>
+                    <button class="button-delete" type="submit">Delete</button>
                 </form>
+                @else
+                <div style="padding: 10px">&nbsp;</div>
                 @endif
             </td>
         </tr>
     @endforeach
     </tbody>
 </table>
-
-<br>
 
 
 <!-- JavaScript for Delete Confirmation -->

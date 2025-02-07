@@ -1,4 +1,4 @@
-<div>
+<div class="container">
     <form action="/user/login" method="POST">
         <h2>Login</h2>
         <div>

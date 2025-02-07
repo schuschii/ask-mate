@@ -8,27 +8,28 @@
 <body>
 <h1>{{ $title }}</h1>
 
-<p></p>
-<a href="/tags">View All Tags</a>
-
+<div class="container">
 
 <!-- Search Form -->
 <form action="/search" method="GET">
     <input type="text" name="q" placeholder="Search questions"/>
-    <button type="submit">Search</button>
+    <button class="button-neutral" type="submit">Search</button>
 </form>
+</div>
 
-<p></p>
+
 <!-- Question List -->
 
 @foreach ($questions as $question)
-    <div class="question">
+    <div class="container">
     <a href="question/{{ $question->id }}">
         <h2>{{ $question->title }}</h2>
     </a>
+        <div class="container bordered">
         <p>{{ $question->message }}</p>
         <p><strong>Votes:</strong> {{ $question->vote_number }}</p>
         <p><strong>Submitted on:</strong> {{ $question->submission_time }}</p>
+        </div>
         <div>
             <p>Tags:</p>
             <ul>
@@ -63,11 +64,10 @@
                     @endforeach
                 </select>
 
-                <button type="submit">➕ Add</button>
+                <button class="button-add" type="submit">➕ Add</button>
             </form>
         </div>
 
-        <hr>
     </div>
 @endforeach
 

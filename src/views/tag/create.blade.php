@@ -6,12 +6,12 @@
 <body>
 
 <h1>Create a New Tag</h1>
-
+<div class="container">
 <form method="POST" action="/tag/create">
     <label for="name">Tag Name:</label>
     <input type="text" id="name" name="name" required>
     <button type="submit">Create Tag</button>
 </form>
-
+</div>
 </body>
 </html>

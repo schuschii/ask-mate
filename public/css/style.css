@@ -1,0 +1,190 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 60px;
+    background-color: #f4f4f4;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    /* ✅ Make it a flex container with column direction */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    gap: 15px; /* Adds space between child elements */
+}
+
+.bordered {
+    border: 2px solid grey; /* ✅ Black border */
+    border-radius: 10px; /* ✅ Rounded corners */
+    padding: 10px; /* Optional: Adds spacing inside */
+    font-style: italic;
+}
+
+/* Buttons */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+.button-add {
+    background-color: green;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+.button-add-ans {
+    background-color: gold;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+.horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-delete {
+    background-color: crimson;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+.button-neutral {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    height: fit-content;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;  /* Fix to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333; /* Dark background */
+    padding: 15px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+.navbar div {
+    padding: 0 20px; /* Adjust padding inside each flex item */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar a:hover {
+    background: #575757;
+}
+
+/* Forms */
+form {
+    margin: 20px 0;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Questions & Answers */
+.question, .answer {
+    background: white;
+    padding: 15px;
+    margin: 30px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+

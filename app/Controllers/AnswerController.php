@@ -108,7 +108,7 @@ class AnswerController extends Controller
 
         $this->answerRepository->update($answer);
 
-        header("Location: /answers/list/{$answer->id_question}");
+        header("Location: /question/{$answer->id_question}");
         exit;
     }
 
