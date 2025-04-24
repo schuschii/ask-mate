@@ -14,7 +14,7 @@
         <a class="nav-link" href="/">Home</a>
     </div>
     <div class="navbar-right">
-        @if(isset($_SESSION['user_id']))
+        @if(isset($_SESSION['user']))
             <a class="nav-link" href="/logout">Logout</a>
         @else
             <a class="nav-link" href="/user/login">Login</a>

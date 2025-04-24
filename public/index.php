@@ -3,29 +3,23 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 
-
 use App\Test;
 
 $test = new Test();
-//$test->sayHello();
-
-//------------------------//
 
 
 use App\Core\Config;
 use App\Core\Database;
 
-Config::load(__DIR__ . '/../config/config.local.json');
+try {
+    Config::load(__DIR__ . '/../config/config.local.json');
+} catch (Exception $e) {
+    die("Error while configuring app: " . $e->getMessage());
+}
 
 Database::connect();
 
 $pdo = Database::getConnection();
-
-/*if ($pdo) {
-    echo "✅ Database connection established successfully!<br>";
-} else {
-    echo "❌ Failed to connect to the database.";
-}*/
 
 
 use App\Core\Logger;
@@ -34,10 +28,8 @@ use App\Core\Logger;
 $logger = new Logger();
 
 // Test different log levels
-//$logger->info("Application started.");
-//$logger->error("Something went wrong!", ["file" => "index.php", "line" => 23]);
-
-//echo "✅ Logging system initialized. Check 'logs/app.log'!<br>";
+$logger->info("TEST: Application started.");
+$logger->error("TEST: Something went wrong!", ["file" => "index.php", "line" => 23]);
 
 
 use App\Core\Router;
@@ -52,7 +44,6 @@ $controller->showNavbar();
 
 $router = new Router($pdo);
 
-// Define routes
 
 //User routes
 $router->add('GET', '/', [HomeController::class, 'index']);
@@ -64,10 +55,9 @@ $router->add('POST', '/user/register', [UserController::class, 'saveUser']);
 //login
 $router->add('GET', '/user/login', [UserController::class, 'login']);
 $router->add('POST', '/user/login', [UserController::class, 'loginUser']);
-
 $router->add('GET', '/user/{id}', [UserController::class, 'showUser']);
-
-// Needs logout route and method
+//logout
+$router->add('GET', '/logout', [UserController::class, 'logout']);
 
 // Question routes
 $router->add('GET', '/questions', [QuestionController::class, 'showQuestions']);
@@ -103,6 +93,9 @@ $router->add('POST', '/tag/remove/{id}', [TagController::class, 'removeTag']);
 
 
 // Dispatch the request
-$router->dispatch();
+try {
+    $router->dispatch();
+} catch (Exception $e) {
+    die("Error while dispatching: " . $e->getMessage());
+}
 
-// Run with "php -S localhost:8000 -t public"

@@ -1,11 +1,5 @@
 <?php
 
-namespace GlobalNamespace {
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-}
-
 namespace App\Controllers {
 
     use App\Core\Controller;
@@ -41,7 +35,7 @@ namespace App\Controllers {
 
                 $allTags = $this->tagRepository->findAll();
                 foreach ($questions as $question) {
-                    $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+                    $question->tags = $this->tagRepository->find($question->id);
                 }
                 $this->render('questions', [
                     'title' => 'List all matching questions',
@@ -58,7 +52,7 @@ namespace App\Controllers {
             $allTags = $this->tagRepository->findAll();
 
             foreach ($questions as $question) {
-                $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+                $question->tags = $this->tagRepository->find($question->id);
             }
 
             $this->render('question.questions', [
@@ -80,9 +74,9 @@ namespace App\Controllers {
 
         public function addQuestion(): void
         {
-            $title = SuperGlobalManager::getRequest('title', ''); // Get POST['title']
-            $message = SuperGlobalManager::getRequest('message', ''); // Get POST['message']
-            $user_id = SuperGlobalManager::getSession('user_id', 1); // Get SESSION['user_id']
+            $title = SuperGlobalManager::getRequest('title', '');
+            $message = SuperGlobalManager::getRequest('message', '');
+            $user_id = SuperGlobalManager::getSession('user');
             $tagIds = SuperGlobalManager::getRequest('tag_ids', []);
 
             if ($title && $message) {
@@ -117,8 +111,7 @@ namespace App\Controllers {
 
             $allTags = $this->tagRepository->findAll();
 
-           
-            $question->tags = $this->tagRepository->findTagsByQuestion($question->id);
+            $question->tags = $this->tagRepository->find($question->id);
 
             $this->render('question.details', [
                 'title' => 'View Question',
@@ -156,7 +149,7 @@ namespace App\Controllers {
                 if ($title && $message) {
                     $question = $this->questionRepository->find($id);
                     if (!$question) {
-                        die("Question not found!");
+                        exit("Question not found!");
                     }
 
                     $question->title = $title;

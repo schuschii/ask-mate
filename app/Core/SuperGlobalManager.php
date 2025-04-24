@@ -13,7 +13,7 @@ class SuperGlobalManager
      */
     public static function getRequest(string $key, $default = null)
     {
-        return isset($_REQUEST[$key]) ? $_REQUEST[$key] : $default;
+        return $_REQUEST[$key] ?? $default;
     }
 
     /**
@@ -37,7 +37,7 @@ class SuperGlobalManager
      */
     public static function getSession(string $key, $default = null)
     {
-        return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+        return $_SESSION[$key] ?? $default;
     }
 
     /**

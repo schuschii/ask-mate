@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Exception;
+
 class Router
 {
     private array $routes = [];
@@ -28,6 +30,7 @@ class Router
 
     /**
      * Dispatch the request to the appropriate controller/method.
+     * @throws Exception
      */
     public function dispatch(): void
     {
@@ -68,7 +71,7 @@ class Router
 
         $params = [];
         foreach ($routeParts as $index => $part) {
-            if (preg_match('/^\{(.+)\}$/', $part, $matches)) {
+            if (preg_match('/^\{(.+)}$/', $part, $matches)) {
                 $params[$matches[1]] = $requestParts[$index]; // Extract dynamic parameter
             } elseif ($part !== $requestParts[$index]) {
                 return false;
@@ -80,6 +83,7 @@ class Router
 
     /**
      * Execute the matched route's handler.
+     * @throws Exception
      */
     private function execute($handler, array $params): void
     {
@@ -90,7 +94,7 @@ class Router
             $controller = new $controllerName($this->pdo);
             call_user_func_array([$controller, $method], $params);
         } else {
-            throw new \Exception("Invalid route handler.");
+            throw new Exception("Invalid route handler.");
         }
     }
 }

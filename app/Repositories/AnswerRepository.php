@@ -9,7 +9,7 @@ use PDO;
 class AnswerRepository implements RepositoryInterface
 {
 
-private ?PDO $db;
+    private ?PDO $db;
 
     public function __construct()
     {
@@ -22,9 +22,9 @@ private ?PDO $db;
      */
     public function findAll(): array
     {
-        $sql = "SELECT * FROM answer"; //queryvel kiszedek minden kérdést a táblából
-        $stmt = $this->db->query($sql);//egy pdo class method arra hogy elvégezze a queryt
-        return $stmt->fetchAll(PDO::FETCH_OBJ); //lefetchel mindent mint egy associative array
+        $sql = "SELECT * FROM answer";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -33,8 +33,8 @@ private ?PDO $db;
     public function find(int $id): ?object
     {
         $sql = "SELECT * FROM answer WHERE id = :id";
-        $stmt = $this->db->prepare($sql); //előkészíti a queryt mielőtt végrehajtaná, data ként fogja kezelni az id-t így nem tudják droppolni vagy lekérni az egészet
-        $stmt->execute(['id' => $id]); // helyettesíti a placeholdert a valós id value val majd végre hajtja a queryt
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['id' => $id]);
         $result = $stmt->fetch(PDO::FETCH_OBJ);
         return $result ? (object)$result : null;
     }
@@ -53,7 +53,7 @@ private ?PDO $db;
     public function save(object $entity): void
     {
         $sql = "INSERT INTO answer (id_question, id_registered_user, message, vote_number) VALUES (:id_question, :id_registered_user, :message, :vote_number)";
-        $stmt = $this->db->prepare($sql); // ugyanúgy sql injection ellen véd
+        $stmt = $this->db->prepare($sql);
         $stmt->execute(['id_question' => $entity->id_question,
             'id_registered_user' => $entity->id_registered_user,
             'message' => $entity->message,

@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Exception;
 
 class UserController extends Controller
 {
@@ -42,13 +43,22 @@ class UserController extends Controller
         }
 
         if (!$this->userRepository->isPasswordValid($email, $password)) {
-            die("Invalid password.");
+            echo("Invalid password.");
         } else {
             echo "GOOD PASSWORD";
         }
 
+
         // Password is valid; set session and redirect
         $_SESSION['user'] = $user->id;
+        header("Location: /home");
+        exit;
+    }
+
+    public function logout(): void
+    {
+        unset($_SESSION['user']);
+        session_destroy();
         header("Location: /home");
         exit;
     }
@@ -74,6 +84,12 @@ class UserController extends Controller
             die("All fields are required.");
         }
 
+        // Check if the email already exists in the database
+        $existingUser = $this->userRepository->findByEmail($email);
+        if ($existingUser) {
+            die("This email is already registered. Please use a different email.");
+        }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             die("Invalid email format.");
         }
@@ -89,7 +105,7 @@ class UserController extends Controller
             $this->userRepository->save($user);
             header("Location: /home");
             exit;
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             die("Error saving user: " . $e->getMessage());
         }
     }
