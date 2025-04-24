@@ -20,7 +20,7 @@
             <td>{{ $answer->message }}</td>
             <td>{{ $answer->email }}</td>
             <td class="horizontal">
-                @if(1 == $answer->id_registered_user)
+                @if($_SESSION['user'] == $answer->id_registered_user)
                     <!-- Edit Answer Button -->
                 <a class="button-neutral" href="/answer/edit/id/{{$answer->id }}">Edit</a>
 

@@ -2,13 +2,14 @@
 
 namespace App\Repositories;
 
-use AllowDynamicProperties;
+
 use App\Core\Database;
-use App\Models\Tag;
 use PDO;
 
-#[AllowDynamicProperties] class TagRepository
+class TagRepository
 {
+    private ?PDO $db;
+
     public function __construct()
     {
         $this->db = Database::getConnection();
@@ -21,11 +22,11 @@ use PDO;
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function save(string $tagName): void
+    public function save(string|object $entity): void
     {
         $sql = "INSERT INTO tag (name) VALUES (:name)";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['name' => $tagName]);
+        $stmt->execute(['name' => $entity]);
     }
 
     public function delete(int $id): void
@@ -35,14 +36,15 @@ use PDO;
         $stmt->execute(['id' => $id]);
     }
 
-    public function findTagsByQuestion(int $questionId): array
+    //findTagsByQuestion
+    public function find(int $id): array
     {
         $sql = "SELECT t.* 
             FROM tag t
             INNER JOIN rel_question_tag r ON t.id = r.id_tag
             WHERE r.id_question = :questionId";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute(['questionId' => $questionId]);
+        $stmt->execute(['questionId' => $id]);
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
@@ -66,6 +68,5 @@ use PDO;
             'tag_id' => $tagId
         ]);
     }
-
 
 }

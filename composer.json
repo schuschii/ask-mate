@@ -10,6 +10,7 @@
   "require": {
     "psr/log": "^3.0",
     "eftec/bladeone": "^4.17",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "ext-json": "*"
   }
 }

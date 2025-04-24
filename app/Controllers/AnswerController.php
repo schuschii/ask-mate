@@ -50,7 +50,7 @@ class AnswerController extends Controller
             die("Invalid request. Missing fields.");
         }
 
-        $user_id = SuperGlobalManager::getSession('user_id', 1);
+        $user_id = SuperGlobalManager::getSession('user');
 
         $answer = new Answer(
             $question_id,

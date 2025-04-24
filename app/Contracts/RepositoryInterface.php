@@ -12,7 +12,7 @@ interface RepositoryInterface
     /**
      * Select a record by its ID.
      */
-    public function find(int $id): ?object;
+    public function find(int $id): object|array|null;
 
     /**
      * Insert a new record.

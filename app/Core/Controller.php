@@ -10,6 +10,7 @@ abstract class Controller
 
     public function __construct()
     {
+        session_start();
         $this->blade = Template::getInstance();
     }
 
