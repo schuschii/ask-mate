@@ -1,14 +1,3 @@
-/*
- * AskMate, again
- *
- * Database schema with dummy data for all tables.
- * Version: 10.4.13-MariaDB
- */
-
-CREATE DATABASE IF NOT EXISTS `ask_mate_again` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-
-USE `ask_mate_again`;
-
 SET FOREIGN_KEY_CHECKS = FALSE;
 
 -- Clear data if tables have existing rows

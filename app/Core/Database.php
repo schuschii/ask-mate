@@ -13,7 +13,13 @@ class Database
     {
         if (self::$pdo === null) {
             try {
-                $config = Config::get('database');
+                $configFilePath = __DIR__ . '/../../config/config.local.json';
+                Config::load($configFilePath);
+
+
+                $env = getenv('ENV') ?: 'production';
+
+                $config = Config::get('database_' . $env);
 
                 $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']};charset={$config['charset']}";
                 self::$pdo = new PDO($dsn, $config['username'], $config['password'], [

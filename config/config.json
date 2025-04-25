@@ -1,5 +1,13 @@
 {
-  "database": {
+  "database_production": {
+    "host": "localhost",
+    "port": 3306,
+    "dbname": "my_database",
+    "username": "username",
+    "password": "password",
+    "charset": "utf8mb4"
+  },
+  "database_test": {
     "host": "localhost",
     "port": 3306,
     "dbname": "my_database",

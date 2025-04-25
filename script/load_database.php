@@ -7,15 +7,18 @@ use App\Core\Database;
 
 try {
     Config::load(__DIR__ . '/../config/config.local.json');
+
+    $env = getenv('ENV') ?: 'production';
+
     Database::connect();
     $pdo = Database::getConnection();
 
-    // Load and execute schema.sql
+    // Load
     $schemaSql = file_get_contents(__DIR__ . '/../database/schema.sql');
-    $pdo->exec($schemaSql);
-
-    // Load and execute populate.sql
     $populateSql = file_get_contents(__DIR__ . '/../database/populate.sql');
+
+    // Execute
+    $pdo->exec($schemaSql);
     $pdo->exec($populateSql);
 
 } catch (Exception $e) {

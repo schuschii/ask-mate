@@ -71,17 +71,15 @@ class QuestionRepository implements RepositoryInterface
     /**
      * @inheritDoc
      */
-    public function delete(int $id): void       // this or: ON DELETE CASCADE in the database
+    public function delete(int $id): void
     {
-
-        // Step 1: Delete all related tags in the rel_question_tag table
+        // Step 1: Delete all related tags
         $sql = "DELETE FROM rel_question_tag WHERE id_question = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-
-        // Step 2: Delete all answers associated with the question
+        // Step 2: Delete all answers
         $sql = "DELETE FROM answer WHERE id_question = :id";
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -106,7 +104,7 @@ class QuestionRepository implements RepositoryInterface
     }
     public function findQuestionsByTag(int $tagId): array
     {
-        $sql = "SELECT q.* FROM questions q
+        $sql = "SELECT q.* FROM question q
                 INNER JOIN rel_question_tag qt ON q.id = qt.id_question
                 WHERE qt.id_tag = :tag_id";
         $stmt = $this->connection->prepare($sql);
@@ -114,8 +112,6 @@ class QuestionRepository implements RepositoryInterface
 
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-
-
 
     public function searchQuestion(string $search): array
     {
