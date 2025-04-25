@@ -32,7 +32,8 @@ AskMate is a Q&A web application focusing on implementing user authentication, q
     ```bash
     composer install
     ```
-3. Set up environment variables and configure database in `config.local.json`:
+3. Configure database in `config.local.json`:
+Add your database credentials under `database_production` section.
     ```bash
     cp config/config.json config/config.local.json
     ```
@@ -45,9 +46,29 @@ AskMate is a Q&A web application focusing on implementing user authentication, q
     php -S localhost:8000 -t public
     ```
 6. Run tests (optional):
+Setting up a test database is required as explained below.
    ```bash 
    composer test
    ```
+
+## Testing with test database
+When running PHPUnit tests, a separate **test database** is used to ensure that no production data is affected. To set up the test database:
+
+1. **Configure the Test Database:**
+   - Open the `config.local.json` file.
+   - Add your test database credentials under the `database_test` section.
+2. **Create the Test Database:**
+   - Make sure the test database exists. You can create it using MySQL or MariaDB with the following SQL command:
+     ```sql
+     CREATE DATABASE your_database_name;
+     ```
+3. **Run the Tests:**
+   - After configuring the test database, you can run the PHPUnit tests using:
+     ```bash
+     composer test
+     ```
+
+**Note:** The application will automatically switch to the test database when running tests based on the configuration in `config.local.json`.
 
 ## Contribution
 Thanks to all the contributors!  
