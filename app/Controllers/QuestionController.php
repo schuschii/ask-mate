@@ -12,16 +12,16 @@ namespace App\Controllers {
     class QuestionController extends Controller
     {
 
-        private QuestionRepository $questionRepository;
-        private TagRepository $tagRepository;
-        private answerRepository $answerRepository;
+        public QuestionRepository $questionRepository;
+        public TagRepository $tagRepository;
+        public AnswerRepository $answerRepository;
 
         public function __construct()
         {
             parent::__construct();
             $this->questionRepository = new QuestionRepository();
             $this->tagRepository = new TagRepository();
-            $this->answerRepository = new answerRepository();
+            $this->answerRepository = new AnswerRepository();
         }
 
         public function search(): void
@@ -165,7 +165,6 @@ namespace App\Controllers {
             header("Location: /question/edit/$id");
             exit;
         }
+
     }
-
-
 }
