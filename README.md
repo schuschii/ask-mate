@@ -21,7 +21,8 @@ AskMate is a Q&A web application focusing on implementing user authentication, q
 - **Composer** (PHP dependency manager)
 - **MySQL** (or Dockerized MySQL instance)
 - **BladeOne** >= 4.17
-- **PHPUnit** >= 9.5 (for running unit tests)
+- **PHPUnit** >= 9.5 (to run unit tests)
+- **Mockery** >= 1.6 (to run unit tests)
 
 ### Setup Steps
 1. Clone the repository:
@@ -58,9 +59,9 @@ When running PHPUnit tests, a separate **test database** is used to ensure that 
    - Open the `config.local.json` file.
    - Add your test database credentials under the `database_test` section.
 2. **Create the Test Database:**
-   - Make sure the test database exists. You can create it using MySQL or MariaDB with the following SQL command:
+   - Make sure the test database exists. Create it using MySQL shell with the SQL command:
      ```sql
-     CREATE DATABASE your_database_name;
+     CREATE DATABASE your_test_database_name;
      ```
 3. **Run the Tests:**
    - After configuring the test database, you can run the PHPUnit tests using:

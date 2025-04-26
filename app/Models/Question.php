@@ -3,10 +3,11 @@
 namespace App\Models;
 
 
+use AllowDynamicProperties;
 use DateTime;
 
 
-class Question
+#[AllowDynamicProperties] class Question
 {
 
 
