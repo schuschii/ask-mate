@@ -11,7 +11,7 @@ AskMate is a Q&A web application focusing on implementing user authentication, q
 - **Search Functionality**: Search questions by keywords to quickly find relevant content.
 
 ## Tech Stack
-- **Backend**: custom MVC framework written in PHP 
+- **Backend**: custom MVC framework written in PHP
 - **Frontend**: BladeOne templating engine
 - **Database**: MariaDB
 
@@ -20,9 +20,9 @@ AskMate is a Q&A web application focusing on implementing user authentication, q
 - **PHP** >= 8.2
 - **Composer** (PHP dependency manager)
 - **MySQL** (or Dockerized MySQL instance)
-- **BladeOne** >= 4.17
-- **PHPUnit** >= 9.5 (to run unit tests)
-- **Mockery** >= 1.6 (to run unit tests)
+- **PHP extensions**
+- PDO
+- JSON
 
 ### Setup Steps
 1. Clone the repository:
@@ -48,7 +48,7 @@ Add your database credentials under `database_production` section.
     ```
 6. Run tests (optional):
 Setting up a test database is required as explained below.
-   ```bash 
+   ```bash
    composer test
    ```
 
@@ -72,7 +72,7 @@ When running PHPUnit tests, a separate **test database** is used to ensure that 
 **Note:** The application will automatically switch to the test database when running tests based on the configuration in `config.local.json`.
 
 ## Contribution
-Thanks to all the contributors!  
+Thanks to all the contributors!
 See [contributors](https://github.com/schuschii/ask-mate/graphs/contributors)
 
 ## License
